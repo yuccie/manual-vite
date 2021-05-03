@@ -28,3 +28,12 @@
 需要的依赖：
 - koa, koa-static
 
+更新.gitignore文件
+
+```bash
+git rm -r --cached .  # 放弃所有已追踪的文件
+ # 增加 .gitignore，并添加忽略规则
+git add . # 增加追踪文件
+git commit -m '更新.gitignore' # 或 gcam '更新.gitignore'文件
+```
+
