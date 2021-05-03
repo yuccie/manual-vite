@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const { serveStaticPlugin } = require('./plugins/serverPluginServeStatic');
+const { moduleRewritePlugin } = require('./plugins/serverPluginModuleRewrite');
 
 function createServer() {
     const app = new Koa();
@@ -20,7 +21,11 @@ function createServer() {
     // koa都是通过中间件形式实现功能
     // 可以定义一个中间件数组，然后将app实例以及其他的对象传过去
     const midwareArr = [
-        serveStaticPlugin, // 实现静态服务
+        // 2、解析import语法，重写路径
+        moduleRewritePlugin,
+
+        // 1、实现静态服务
+        serveStaticPlugin, 
     ]
     midwareArr.forEach(mid => mid(context))
 
