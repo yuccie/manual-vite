@@ -10,3 +10,8 @@
 - 控制台显示的user@hostname (who am I and where am I)
 - user 是用户名，在设置 -》用户与群组 -》高级选项里修改
 - hostname是电脑名字，系统偏好设置 --> 共享 --> 更改电脑名称更改，也可以直接通过hostname直接更改，man hostname查看帮助，man hostname -s jsArt就可以去掉.local字样了。
+
+环境变量添加到哪个配置文件里，是根据你当前终端的shell来决定的
+1. echo $SHELL 可以查看当前shell
+2. 然后在当前shell的配置文件里添加环境变量，比如~/.zshrc
+3. 添加完后，执行source ~/.zshrc即可
