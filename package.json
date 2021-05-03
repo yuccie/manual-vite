@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/yuccie/manual-vite#readme",
   "dependencies": {
+    "es-module-lexer": "^0.4.1",
     "koa": "^2.13.1",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "magic-string": "^0.25.7"
   }
 }
