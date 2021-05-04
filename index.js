@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const { serveStaticPlugin } = require('./plugins/serverPluginServeStatic');
 const { moduleRewritePlugin } = require('./plugins/serverPluginModuleRewrite');
+const { moduleResolvePlugin } = require('./plugins/serverPluginModuleResolve');
 
 function createServer() {
     const app = new Koa();
@@ -24,13 +25,13 @@ function createServer() {
         // 2、解析import语法，重写路径
         moduleRewritePlugin,
 
+        // 3、重写路径后，需要从新路径里拿到资源
+        moduleResolvePlugin,
+
         // 1、实现静态服务
         serveStaticPlugin, 
     ]
     midwareArr.forEach(mid => mid(context))
-
-
-
 
     return app;
 }

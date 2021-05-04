@@ -37,3 +37,8 @@ git add . # 增加追踪文件
 git commit -m '更新.gitignore' # 或 gcam '更新.gitignore'文件
 ```
 
+### 步骤三，添加静态文件服务器中间件
+
+启动服务后，
+### 步骤四
+

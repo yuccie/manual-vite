@@ -12,7 +12,7 @@ function rewriteImports(source) {
     //       { n: 'vue', s: 27, e: 30, ss: 0, se: 31, d: -1 },
     //       { n: './App.vue', s: 49, e: 58, ss: 32, se: 59, d: -1 }
     //     ],
-    //     [],
+    //     [], // 这个数组里是动态导入的部分
     //     false
     // ]
 
@@ -20,7 +20,7 @@ function rewriteImports(source) {
     let str = new MagicString(source);
     imports.forEach(({ n,s,e }) => {
         if (/^[^\/\.]/.test(n)) {
-            const id = `/node_modules/.vite/${n}.js?v=${Date.now()}`;
+            const id = `/node_modules/.vite/${n}.js`;
             str.overwrite(s, e, id);
         }
     })
