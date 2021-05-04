@@ -3,6 +3,7 @@ const { serveStaticPlugin } = require('./plugins/serverPluginServeStatic');
 const { moduleRewritePlugin } = require('./plugins/serverPluginModuleRewrite');
 const { moduleResolvePlugin } = require('./plugins/serverPluginModuleResolve');
 const { htmlPlugin } = require('./plugins/serverPluginHtmlPlugin'); // 向返回的html里注入一些逻辑：比如process变量，热更新等
+const { vuePlugin } = require('./plugins/serverPluginVuePlugin'); // 需要拦截.vue文件并解析返回
 
 function createServer() {
     const app = new Koa();
@@ -33,6 +34,8 @@ function createServer() {
         // 3、重写路径后，需要从新路径里拿到资源
         moduleResolvePlugin,
 
+        // 5、拦截.vue后缀的文件，并处理
+        vuePlugin,
         // 1、实现静态服务
         serveStaticPlugin, 
     ]
