@@ -2,6 +2,7 @@ const Koa = require('koa');
 const { serveStaticPlugin } = require('./plugins/serverPluginServeStatic');
 const { moduleRewritePlugin } = require('./plugins/serverPluginModuleRewrite');
 const { moduleResolvePlugin } = require('./plugins/serverPluginModuleResolve');
+const { htmlPlugin } = require('./plugins/serverPluginHtmlPlugin'); // 向返回的html里注入一些逻辑：比如process变量，热更新等
 
 function createServer() {
     const app = new Koa();
@@ -22,6 +23,10 @@ function createServer() {
     // koa都是通过中间件形式实现功能
     // 可以定义一个中间件数组，然后将app实例以及其他的对象传过去
     const midwareArr = [
+        // 4、向html注入一些逻辑或变量
+        // 其实也可以直接在html文件里写script标签实现，只是比较low且对用户不友好。
+        htmlPlugin,
+
         // 2、解析import语法，重写路径
         moduleRewritePlugin,
 

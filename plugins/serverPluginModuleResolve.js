@@ -42,7 +42,7 @@ exports.moduleResolvePlugin = function({ app, root }) {
     // 匹配当前请求的url，如果是以/node_modules/开头的，说明是重写的路径
     app.use(async (ctx, next) => {
         if (!moduleReg.test(ctx.path)) {
-            // 非重写路径，直接返回
+            // 非重写路径，直接返回，添加return有等待效果，其实相当于return await next();
             return next();
         }
 
