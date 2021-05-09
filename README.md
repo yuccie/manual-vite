@@ -37,8 +37,21 @@ git add . # 增加追踪文件
 git commit -m '更新.gitignore' # 或 gcam '更新.gitignore'文件
 ```
 
-### 步骤三，添加静态文件服务器中间件
+### 手写vite步骤：
 
-启动服务后，
-### 步骤四
+1. npm link创建软连接，链接到自己的myVite，定义package.json的bin字段
+2. 启动koa服务，并定义上下文对象，内含koa实例以及process.cwd()当前node运行目录，其实就是服务实例和项目根路径封到一个对象obj上
+3. 定义静态文件服务器中间件，并将obj传入进去，并分别在public和根目录上设置静态服务器
+4. 定义读取文件数据流的中间件，访问一个资源，静态文件服务器会将资源数据挂载在中间件的ctx上，然后读取数据流中间件通过监听stream事件，获取到数据流。
+5. 第4步已经拿到了数据，但现在需要从入口的app.js分析，因此需要读取js资源，同时利用es-module-lexer解析文件内容，获取里面的es module语法的模块，然后利用magicString重写资源引用路径。
+6. 重写路径后，需要添加中间件从新路径里拿到最终的文件资源，同时需要返回一些项目的核心资源。
+7. 因为有时候会涉及到process等服务端的变量，因此可以添加中间件，将这些变量通过重写ctx.body来直接塞到html里，从而避免出错。
+8. 上面的步骤还只是处理了js等资源，还需要处理vue等资源。。。方式差不多
+
+总结就是：拦截请求，修改请求的路径，返回对应路径下的资源。
+### 其他
+
+- 最新的vite已经不再使用koa了，官方理由如下，总结就是需要大量的插件，而不是中间件。
+
+> Since most of the logic should be done via plugin hooks instead of middlewares, the need for middlewares is greatly reduced. The internal server app is now a good old [connect](https://github.com/senchalabs/connect) instance instead of Koa.
 
